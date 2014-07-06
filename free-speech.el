@@ -36,23 +36,15 @@ e.g. \"The first line \nThe second line\"
     output
     ))
 
-(free-speech--split-sentence "中文、 English 和 123 數字摻雜在一起的 sentence ，中文有一堆亂七八糟的情況，像是標點符號多到爆炸，我都不知該怎麼做好了。The quick fox, jumps.")
+(free-speech--split-sentence "中文、 English 和 123 數字摻雜在一起的 sentence ，中文有一堆亂七八糟的情況，像是標點符號多到爆炸，我都不知該怎麼做好了。The quick fox, jumps.
+這是第二句")
 
-(defun my-split-sentence (INPUT)
-)
+(setq test '(("中文" "、" "English" "和" "123" "數字摻雜在一起的" "sentence" "，" "中文有一堆亂七八糟的情況" "，")
+             ("（這是第二句）像是標點符號多到爆炸" "，" "我都不知該怎麼做好了" "。" "The" "quick" "fox," "jumps.")
+             ("這是第三句")))
 
-(defun free-speech-process-input (input)
-  "Input can be a single Latin word or Chinese/Japanese string ('字串').
-This function will decide the input should use `free-speech--latin' or `free-speech--chinese'
-to disarrange word, then return the result."
-  ;; ("中文和" "1234567890" "and" "English" "words" "同時摻雜" "in" "a" "sentence")
-  ;; [FIXME] 記得不要動到數字的順序。
-  (split-string-and-unquote input "")
-  )
-(substring-no-properties "一個簡單的中文句子，加上標點。" 14 15)
 
-"個一單簡中的句文，子上加點標。"
-(sort  #'>)
+
 ;; [FIXME] ...orz如果latin-word是"(parenthesis)"這樣的字串勒...需要用到 (("符號" . 位置) ...)這麼機車的方法處理嗎...
 (defun free-speech--latin (latin-word)
   "input should be a single word and output whose characters are randomly ordered one.
@@ -82,55 +74,87 @@ e.g. \"foobar!\" => \"fboaor!\". (If ending contains punctuation, it remains in 
            (free-speech--latin latin-word)   ;If the same as input, do again.
          (if PUNC
              (format "%s%s" output PUNC)
-           output
-           ))))))
-
+           output))))))
 
 (defun free-speech--chinese (input)
-  ""
-  (let* ((RAND_LIST (random-intergers-list (length input)))
-         output)
-    (dolist (x RAND_LIST)
-      (setq output (concat output (sub-char input x))))
-    (if (equal input output)
-        (free-speech--chinese input)
-         output)))
+  "Input should be a chinese string (not include punctuation).
+e.g. \"他的包袱掉出兩粒橘子\"
+=> (\"他的\" \"包袱\" \"掉出兩\" \"粒橘子\") ; LIST
+=> (\"的他\" \"袱包\" \"出掉兩\" \"橘子粒\") ; R_LIST
+=> 的他袱包出掉兩橘子粒                      : FIN"
+  (let* (LIST R_LIST FIN)
+    (while (> (length input) 3)
+      (let ((n (free-speech-random-length)))
+        (setq LIST (cons (substring-no-properties input 0 n) LIST))
+        (setq input (substring-no-properties input n))))
+    (when (>= (length input) 1)
+      (setq LIST (cons input LIST)))
+    ;; Reverse
+    (mapcar (lambda (x)           ; x = "字串"
+              (let ((new-string "")
+                    (rnd-list (random-intergers-list (length x))))
+                (mapcar (lambda (y) ;y is an interger from rnd-list
+                          (setq new-string (concat new-string (sub-char x y)))) rnd-list)
+                (setq R_LIST (cons new-string R_LIST))
+                ))
+            LIST)
+    ;; FIN
+    (apply #'concat R_LIST)
+    )
+)
+(mapc (lambda (x) (* x x)) '(1 2 3 4 5))
 
-(setq free-speech-weighting-list [2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 4 4 4])
+;; ("下下" "一下" "測試" "中文")
 
-(defun free-speech-random-length ()
-  "Generate a random length for Chinese volcabulary.
-Take a look of `free-speech-weighting-list'"
-  (aref free-speech-weighting-list
-        (random (length free-speech-weighting-list))))
-(free-speech-random-length)
-;; [FIXME] 記得可以用mapcar把("中文" "句子")送給`free-speech--chinese'處理。
-;; (mapcar '1+ [3 4 5] ) => (4 5 6)
 
 (defun free-speech-split-chinese-sentence (input)
   "Split the input sentence into several elements of a list as output.
 the length of an element is from `free-speech-random-length'. e.g.:
 \"他的包袱掉出兩粒橘子\" => (\"他的\" \"包袱\" \"掉出兩\" \"粒橘子\")"
-    ;; [FIXME] 中文字串要先判斷剩餘長度，再決定要不要用亂數處理
+  ;; [FIXME] 中文字串要先判斷剩餘長度，再決定要不要用亂數處理
+  (let* ((INPUT-LIST (split-string-and-unquote input "")))))
 
-  (let* ((INPUT-LIST (split-string-and-unquote input ""))
-         output)
-    (
-     (let ((x)
-           (LEN (free-speech-random-length)))
-      (dotimes (i LEN) ;i is useless
-        (setq x (concat x (pop INPUT-LIST)))))
+
+(setq free-speech-weighting-list [1 1 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 4 4 4])
+(defun free-speech-random-length ()
+  "Generate a random length for Chinese volcabulary.
+Take a look of `free-speech-weighting-list'"
+  (aref free-speech-weighting-list
+        (random (length free-speech-weighting-list))))
+
+;; [FIXME] 記得可以用mapcar把("中文" "句子")送給`free-speech--chinese'處理。
+;; (mapcar '1+ [3 4 5] ) => (4 5 6)
+
+
+;; [TODO] 主函數
+(defun free-speech-rearrange-sentence (input)
+  
+  )
+
+(defun free-speech-process-input-single (input)
+  "Input can be a *SINGLE* Latin word or Chinese/Japanese string ('字串').
+This function will decide the input should use `free-speech--latin' or
+`free-speech--chinese' to disarrange word, then return the result."
+  ;; ("中文和" "1234567890" "and" "English" "words" "同時摻雜" "in" "a" "sentence")
+  ;; [FIXME] 記得不要動到數字的順序。
+  (cond ((string-match "\\cc" input)
+         (free-speech--chinese input))
+        ((string-match "\\ca" input)
+         (free-speech--latin input))
+        ((string-match "[0-9]" input)
+          input)))
+
 
 
 
      ;; [FIXME] 數字不要動啦...
 
-     (mapcar (lambda (y)
-               (mapcar 'free-speech--latin y))
-             '(("Do" "you" "want" "to" "come" "to" "COSCUP" "2014," "but" "are" "worried" "about" "not" "getting" "TICKETS" "at" "the" "first" "time?")
-               ("This" "year" "we" "have" "an" "Open" "Source" "Contributor" "Registration" "Program" "for" "people" "who" "make" "contribution" "to" "open" "source" "society" "to" "attend" "COSCUP." "We" "will" "send" "Registration" "Codes" "to" "qualified" "applicants." "Activating" "a" "Registration" "Code" "by" "the" "registration" "deadline" "(to" "be" "published" "later)" "will" "get" "an" "invitation" "to" "COSCUP" "2014."))
-             )
+(mapcar (lambda (y)
+          (mapcar 'free-speech--latin y))
+        '(("Do" "you" "want" "to" "come" "to" "COSCUP" "2014," "but" "are" "worried" "about" "not" "getting" "TICKETS" "at" "the" "first" "time?")
+          ("This" "year" "we" "have" "an" "Open" "Source" "Contributor" "Registration" "Program" "for" "people" "who" "make" "contribution" "to" "open" "source" "society" "to" "attend" "COSCUP." "We" "will" "send" "Registration" "Codes" "to" "qualified" "applicants." "Activating" "a" "Registration" "Code" "by" "the" "registration" "deadline" "(to" "be" "published" "later)" "will" "get" "an" "invitation" "to" "COSCUP" "2014."))
         )
+)
 
 (apply #'concatenate 'string '("the" "quick" "fox"))
 
