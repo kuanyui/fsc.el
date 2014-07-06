@@ -28,7 +28,7 @@ e.g. \"The first line \nThe second line\"
 => ((\"The\" \"first\" \"line\") (\"The\" \"second\" \"line\"))"
   (setq input (replace-regexp-in-string "\\(\\cc\\)\\(\\ca\\)" "\\1 \\2" input))
   (setq input (replace-regexp-in-string "\\(\\ca\\)\\(\\cc\\)" "\\1 \\2" input))
-  (setq input (replace-regexp-in-string "\\([。，！？；：「」『』（）、【】《》〈〉]\\)" " \\1 " input))
+  (setq input (replace-regexp-in-string "\\([。，！？；：「」『』()（）、【】《》〈〉]\\)" " \\1 " input))
   (let (output)
     (mapcar (lambda (x)
               (push (split-string-and-unquote x " +") output))
@@ -36,14 +36,10 @@ e.g. \"The first line \nThe second line\"
     output
     ))
 
-(free-speech--split-sentence "中文、 English 和 123 數字摻雜在一起的 sentence ，中文有一堆亂七八糟的情況，像是標點符號多到爆炸，我都不知該怎麼做好了。The quick fox, jumps.
-這是第二句")
-
-(setq test '(("中文" "、" "English" "和" "123" "數字摻雜在一起的" "sentence" "，" "中文有一堆亂七八糟的情況" "，")
-             ("（這是第二句）像是標點符號多到爆炸" "，" "我都不知該怎麼做好了" "。" "The" "quick" "fox," "jumps.")
-             ("這是第三句")))
-
-
+(free-speech--split-sentence "中文、English和123數字摻雜在一起的sentence。
+換行惹第二句。
+這是第三句。")
+(setq test '(("中文" "、" "English" "和" "123" "數字摻雜在一起的" "sentence" "。") ("換行惹第二句" "。") ("這是第三句" "。")))
 
 ;; [FIXME] ...orz如果latin-word是"(parenthesis)"這樣的字串勒...需要用到 (("符號" . 位置) ...)這麼機車的方法處理嗎...
 (defun free-speech--latin (latin-word)
@@ -102,17 +98,6 @@ e.g. \"他的包袱掉出兩粒橘子\"
     (apply #'concat R_LIST)
     )
 )
-(mapc (lambda (x) (* x x)) '(1 2 3 4 5))
-
-;; ("下下" "一下" "測試" "中文")
-
-
-(defun free-speech-split-chinese-sentence (input)
-  "Split the input sentence into several elements of a list as output.
-the length of an element is from `free-speech-random-length'. e.g.:
-\"他的包袱掉出兩粒橘子\" => (\"他的\" \"包袱\" \"掉出兩\" \"粒橘子\")"
-  ;; [FIXME] 中文字串要先判斷剩餘長度，再決定要不要用亂數處理
-  (let* ((INPUT-LIST (split-string-and-unquote input "")))))
 
 
 (setq free-speech-weighting-list [1 1 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 4 4 4])
@@ -127,9 +112,17 @@ Take a look of `free-speech-weighting-list'"
 
 
 ;; [TODO] 主函數
-(defun free-speech-rearrange-sentence (input)
-  
-  )
+(defun free-speech--rearrange-sentence (input)
+  (let ((FIN ""))
+    (mapcar (lambda (x)
+              (let ((line ""))
+                (mapcar (lambda (y)     ; "The"
+                          (setq line (concat line (free-speech-process-input-single y)))) x)       ; ("The" "sentence" ".")
+                (setq FIN (concat FIN line "\n"))))
+            (free-speech--split-sentence input)) ; (("The" "sentence" ".")("Apple"))
+    (replace-regexp-in-string "\\(\\cc\\)\\([A-z0-9]\\)" "\\1 \\2" FIN)))
+
+
 
 (defun free-speech-process-input-single (input)
   "Input can be a *SINGLE* Latin word or Chinese/Japanese string ('字串').
@@ -140,21 +133,12 @@ This function will decide the input should use `free-speech--latin' or
   (cond ((string-match "\\cc" input)
          (free-speech--chinese input))
         ((string-match "\\ca" input)
-         (free-speech--latin input))
+         (concat (free-speech--latin input) " "))
         ((string-match "[0-9]" input)
-          input)))
+         (concat input " "))))
 
 
 
 
-     ;; [FIXME] 數字不要動啦...
 
-(mapcar (lambda (y)
-          (mapcar 'free-speech--latin y))
-        '(("Do" "you" "want" "to" "come" "to" "COSCUP" "2014," "but" "are" "worried" "about" "not" "getting" "TICKETS" "at" "the" "first" "time?")
-          ("This" "year" "we" "have" "an" "Open" "Source" "Contributor" "Registration" "Program" "for" "people" "who" "make" "contribution" "to" "open" "source" "society" "to" "attend" "COSCUP." "We" "will" "send" "Registration" "Codes" "to" "qualified" "applicants." "Activating" "a" "Registration" "Code" "by" "the" "registration" "deadline" "(to" "be" "published" "later)" "will" "get" "an" "invitation" "to" "COSCUP" "2014."))
-        )
-)
-
-(apply #'concatenate 'string '("the" "quick" "fox"))
 
