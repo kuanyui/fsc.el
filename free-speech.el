@@ -26,16 +26,20 @@ e.g. (sub-char \"test\" 2) => \"e\""
 This function split the input (by space) into a nested list (by newline).
 e.g. \"The first line \nThe second line\"
 => ((\"The\" \"first\" \"line\") (\"The\" \"second\" \"line\"))"
+  (setq input (replace-regexp-in-string "\\(\\cc\\)\\(\\ca\\)" "\\1 \\2" input))
+  (setq input (replace-regexp-in-string "\\(\\ca\\)\\(\\cc\\)" "\\1 \\2" input))
+  (setq input (replace-regexp-in-string "\\([。，！？；：「」『』（）、【】《》〈〉]\\)" " \\1 " input))
   (let (output)
     (mapcar (lambda (x)
-              (push (split-string-and-unquote x " ") output))
+              (push (split-string-and-unquote x " +") output))
             (reverse (split-string-and-unquote input "\n")))
     output
     ))
 
+(free-speech--split-sentence "中文、 English 和 123 數字摻雜在一起的 sentence ，中文有一堆亂七八糟的情況，像是標點符號多到爆炸，我都不知該怎麼做好了。The quick fox, jumps.")
+
 (defun my-split-sentence (INPUT)
-  
-(free-speech--split-sentence "中文、 English 和 123 數字摻雜在一起的 sentence ，中文有一堆亂七八糟的情況，像是標點符號多到爆炸，我都不知該怎麼做好了。")
+)
 
 (defun free-speech-process-input (input)
   "Input can be a single Latin word or Chinese/Japanese string ('字串').
