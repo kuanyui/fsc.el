@@ -39,11 +39,10 @@
       (while (> num (length rnd-list))
         (cl-pushnew (random (1+ dict-len)) rnd-list))
       (mapcar (lambda (n)
-                (setq FIN (cons (concat (elt dict-list n) " ") FIN)))
+                (setq FIN (cons (elt dict-list n) FIN)))
               rnd-list)
-      (apply #'concat FIN)
+      (mapconcat (lambda (x) x) FIN " ")
       )))
-
 
 
 ;; (load-file "~/.emacs.d/under-construction/speech-freedom/fsc-spook.el")
