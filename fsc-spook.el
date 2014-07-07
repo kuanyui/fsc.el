@@ -3,10 +3,8 @@
 ;; Copyright (C) 2014  kuanyui
 ;; License: WTFPL 1.0
 
+
 ;;; Commentary:
-
-;; 
-
 ;;; Code:
 (require 'cl)
 
@@ -15,19 +13,24 @@
 
 (defvar fsc-spook-default-count 16)
 
-(defun fsc-spook-wheelparty ()
-  (interactive)
-  (if (null current-prefix-arg)
-      (insert (fsc-spook-internal "wheelparty" fsc-spook-default-count))
-    (insert (fsc-spook-internal "wheelparty" (string-to-int (read-from-minibuffer "How many words: "))))))
+(defmacro fsc-spook-define (name)
+  "Create function to insert words from spook dictionaries.
+NAME is the file name, and will become the function name.
+You can create a new dictionary file in plain text and place it
+at spook-dict/ (under this package directory), then:
+(fsc-spook-define FILENAME)"
+  (list 'defun (intern (format "fsc/spook-%s" name)) '()
+        `(interactive)
+        `(if (null current-prefix-arg)
+             (insert (fsc-spook ,(format "%s" name) fsc-spook-default-count))
+           (insert (fsc-spook ,(format "%s" name) (string-to-int (read-from-minibuffer "How many words: ")))))))
 
-(defun fsc-spook-greatwall ()
-  (interactive)
-    (if (null current-prefix-arg)
-      (insert (fsc-spook-internal "greatwall" fsc-spook-default-count))
-    (insert (fsc-spook-internal "greatwall" (string-to-int (read-from-minibuffer "How many words: "))))))
+(fsc-spook-define wheelparty)
+(fsc-spook-define greatwall)
 
-(defun fsc-spook-internal (file num)
+(defun fsc-spook (file num)
+  "FILE (string) is the filename in spook-dict directory.
+NUM (integer) means how many words you want to get."
   (let (dict-list dict-len)
     (with-temp-buffer
       (insert-file-contents (concat fsc-spook-directory "spook-dict/" file))
@@ -43,7 +46,6 @@
               rnd-list)
       (mapconcat (lambda (x) x) FIN " ")
       )))
-
 
 ;; (load-file "~/.emacs.d/under-construction/speech-freedom/fsc-spook.el")
 
