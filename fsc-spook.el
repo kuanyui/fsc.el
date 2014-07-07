@@ -19,7 +19,7 @@ NAME is the file name, and will become the function name.
 You can create a new dictionary file in plain text and place it
 at spook-dict/ (under this package directory), then:
 (fsc-spook-define FILENAME)"
-  (list 'defun (intern (format "fsc/spook-%s" name)) '()
+  (list 'defun (intern (format "fsc/spook-insert-%s" name)) '()
         `(interactive)
         `(if (null current-prefix-arg)
              (insert (fsc-spook ,(format "%s" name) fsc-spook-default-count))
@@ -28,12 +28,29 @@ at spook-dict/ (under this package directory), then:
 (fsc-spook-define wheelparty)
 (fsc-spook-define greatwall)
 
+(defun fsc-spook-encode-buffer ()
+  "Use this before saving file."
+  (interactive)
+  (insert
+   (mapconcat (lambda (x) (format "%s" (* 689 x)))
+              (string-to-list (delete-and-extract-region (point-min) (point-max)))
+              " ")))
+
+(defun fsc-spook-decode-buffer ()
+  (interactive)
+  (insert
+   (mapconcat (lambda (x) (string (/ (string-to-number x) 689)))
+              (split-string-and-unquote (delete-and-extract-region (point-min) (point-max)) " ")
+              "")))
+
+
 (defun fsc-spook (file num)
   "FILE (string) is the filename in spook-dict directory.
 NUM (integer) means how many words you want to get."
   (let (dict-list dict-len)
     (with-temp-buffer
       (insert-file-contents (concat fsc-spook-directory "spook-dict/" file))
+      (fsc-spook-decode-buffer)
       (setq dict-len
             (length (setq dict-list (split-string-and-unquote (buffer-string) "\n")))))
     (if (> num dict-len)
@@ -46,6 +63,49 @@ NUM (integer) means how many words you want to get."
               rnd-list)
       (mapconcat (lambda (x) x) FIN " ")
       )))
+
+
+;; Major mode for editing spook dictionary file
+
+(defun fsc/spook-edit-start ()
+  (interactive)
+  (if (yes-or-no-p "Are you sure to start editing \"a spook file\"? ")
+      (progn (fsc/spook-decode)
+             (if (not (eq major-mode 'fsc-spook-edit-mode))
+                 (fsc-spook-edit-mode)))
+    (message "Canceled.")))
+
+(defun fsc/spook-edit-save-buffer ()
+  (interactive)
+  (if (eq major-mode 'fsc-spook-edit-mode)
+      (progn (fsc-spook-encode-buffer)
+             (save-buffer)
+             (fsc-spook-decode-buffer)
+             (message (format "Wrote %s" (buffer-file-name))))
+    (message "This is not a spook dictionary file. and you must to use M-x fsc/spook-edit-start first.")))
+
+(defun fsc/spook-edit-kill-buffer ()
+  (interactive)
+  (if (yes-or-no-p "Save file before kill buffer?")
+      (progn (sort-lines nil (point-min) (point-max))
+             (fsc/spook-edit-save-buffer)))
+  (kill-buffer (current-buffer)))
+
+(define-derived-mode fsc-spook-edit-mode nil "Spook-File"
+  "Major mode for editing fsc's spook file.")
+
+(defcustom fsc-spook-edit-mode-hook nil
+  "Normal hook run when entering fsc-spook-edit-mode."
+  :type 'hook
+  :group nil)
+
+(defvar fsc-spook-edit-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-x C-s") 'fsc/spook-edit-save-buffer)
+    (define-key map (kbd "C-x k") 'fsc/spook-edit-kill-buffer)
+    map)
+  "Keymap for editing fsc's spook file.")   ;document
+
 
 ;; (load-file "~/.emacs.d/under-construction/speech-freedom/fsc-spook.el")
 
