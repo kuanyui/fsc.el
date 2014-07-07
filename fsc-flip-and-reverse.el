@@ -1,19 +1,34 @@
 ;;; fsc-upside-down.el ---                           -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014  kuanyui
-
 ;; Author: kuanyui <azazabc123@gmail.com>
+;; License: WTFPL 1.0
 ;; Keywords:
 
+;; Reverse
+(defun fsc/reverse-region (begin end)
+  (interactive "r")
+  (insert (fsc-reverse (delete-and-extract-region begin end))))
+
+(defun fsc/reverse-interactively ()
+  (interactive)
+  (let* ((input (read-from-minibuffer "Input text: ")))
+    (if (> (length input) 0)
+        (insert (fsc-reverse input))
+      (message "Please input some text!"))))
+
+(defun fsc-reverse (input)
+    (apply #'string (reverse (string-to-list input))))
+
+;; Flip
 (defmacro fsc/flip-define-region (name &rest body)
   "`str' is substring of the region."
   (list 'defun (intern (format "fsc/%s-region" name)) '(begin end)
         `(interactive "r")
         `(let ((str (buffer-substring-no-properties begin end)))
-           (if str (progn (delete-region begin end)
-                          (insert ,@body)
-                          (message "Done."))
-              (message "Error, it seems that no active region.")))))
+           (delete-region begin end)
+           (insert ,@body)
+           (message "Done."))))
 
 (fsc/flip-define-region flip (fsc-flip str))
 (fsc/flip-define-region flip-back (fsc-flip str t))
@@ -21,7 +36,7 @@
 (fsc/flip-define-region flip-and-reverse-back (fsc-flip-and-reverse str t))
 
 (defmacro fsc/flip-define-interactively (name &rest body)
-  "`str' is substring of the region."
+  "`str' is input."
   (list 'defun (intern (format "fsc/%s-interactively" name)) '()
         `(interactive)
         `(let ((str (read-from-minibuffer "Input text: ")))
@@ -36,7 +51,7 @@
 (fsc/flip-define-interactively flip-and-reverse-back (fsc-flip-and-reverse str t))
 
 (defun fsc-flip-and-reverse (string &optional recover-p)
-  (fsc-reverse-internal
+  (fsc-reverse
    (fsc-flip string (if recover-p
                         recover-p
                       nil))))
@@ -143,3 +158,4 @@ If recover-p is t,  ɐ => a "
  ("," . "'")))
 
 
+(provide 'fsc-flip-and-reverse)
