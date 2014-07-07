@@ -1,10 +1,18 @@
 ;; Red_d_: 有沒有人以可一寫個音注入輸法，是但打子完句，字可以新重的排列。#地方的民鄉需要化進
 ;;FSC - Fuck the Speeching Censorship
 
-(defun fsc-rearrange-region (begin end)
+(defun fsc/rearrange-region (begin end)
   (interactive "r")
-  (insert (fsc-rearrange-internal
+  (insert (fsc-rearrange
            (delete-and-extract-region begin end))))
+
+(defun fsc/rearrange-interactively ()
+  (interactive)
+  (let* ((string (read-from-minibuffer "Input text: ")))
+    (if (> (length string) 0)
+        (insert (fsc-rearrange string))
+      (message "Please input some text."))
+  ))
 
 (defun random-intergers-list (range-max)
   "input should be an interger, and output a list which elements are out of order.
@@ -123,7 +131,7 @@ This function will decide the input should use `fsc-rearrange--latin' or
          (concat input " "))))
 
 ;; [FIXME] 改用mapconcat重寫，可以避免最後一行多出的換行
-;; (defun fsc-rearrange-internal (input)
+;; (defun fsc-rearrange (input)
 ;;   "Main function to handle sentences (include newlines, CJK/Latin)."
 ;;   (let ((FIN ""))
 ;;     (mapcar (lambda (x)                 ; ("The" "sentence" ".")
@@ -134,7 +142,7 @@ This function will decide the input should use `fsc-rearrange--latin' or
 ;;             (fsc-rearrange--split-sentence input)) ; (("The" "sentence" ".")("Apple"))
 ;;     (replace-regexp-in-string "\\(\\cc\\)\\([A-z0-9]\\)" "\\1 \\2" FIN)))
 
-(defun fsc-rearrange-internal (input)
+(defun fsc-rearrange (input)
   "Main function to handle sentences (include newlines, CJK/Latin)."
     (mapconcat (lambda (x)                 ;原始list
                  (mapconcat (lambda (y)     ; ("The" "sentence" ".")
@@ -144,7 +152,7 @@ This function will decide the input should use `fsc-rearrange--latin' or
     )
 
 
-(fsc-rearrange-internal "WTFPL（Do What The Fuck You Want To Public License，中文譯名：你他媽的想幹嘛就幹嘛公眾授權條款）
+(fsc-rearrange "WTFPL（Do What The Fuck You Want To Public License，中文譯名：你他媽的想幹嘛就幹嘛公眾授權條款）
 是一種不太常用的、極度放任的自由軟體授權條款。")
 
 
