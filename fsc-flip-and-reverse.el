@@ -10,45 +10,43 @@
   (interactive "r")
   (insert (fsc-reverse (delete-and-extract-region begin end))))
 
-(defun fsc/reverse-interactively ()
-  (interactive)
-  (let* ((input (read-from-minibuffer "Input text: ")))
-    (if (> (length input) 0)
-        (insert (fsc-reverse input))
-      (message "Please input some text!"))))
+(defun fsc/reverse-minibuffer (text)
+  (interactive "sInput text: ")
+  (if (> (length text) 0)
+      (insert (fsc-reverse text))
+    (message "Please input some text!")))
 
 (defun fsc-reverse (input)
     (apply #'string (reverse (string-to-list input))))
 
 ;; Flip
 (defmacro fsc/flip-define-region (name &rest body)
-  "`str' is substring of the region."
+  "`text' is substring of the region."
   (list 'defun (intern (format "fsc/%s-region" name)) '(begin end)
         `(interactive "r")
-        `(let ((str (buffer-substring-no-properties begin end)))
+        `(let ((text (buffer-substring-no-properties begin end)))
            (delete-region begin end)
            (insert ,@body)
            (message "Done."))))
 
-(fsc/flip-define-region flip (fsc-flip str))
-(fsc/flip-define-region flip-back (fsc-flip str t))
-(fsc/flip-define-region flip-and-reverse (fsc-flip-and-reverse str))
-(fsc/flip-define-region flip-and-reverse-back (fsc-flip-and-reverse str t))
+(fsc/flip-define-region flip (fsc-flip text))
+(fsc/flip-define-region flip-back (fsc-flip text t))
+(fsc/flip-define-region flip-and-reverse (fsc-flip-and-reverse text))
+(fsc/flip-define-region flip-and-reverse-back (fsc-flip-and-reverse text t))
 
-(defmacro fsc/flip-define-interactively (name &rest body)
-  "`str' is input."
-  (list 'defun (intern (format "fsc/%s-interactively" name)) '()
-        `(interactive)
-        `(let ((str (read-from-minibuffer "Input text: ")))
-           (if (> (length str) 0)
-               (progn (insert ,@body)
-                      (message "Done."))
-              (message "Please input some text.")))))
+(defmacro fsc/flip-define-minibuffer (name &rest body)
+  "`text' is input."
+  (list 'defun (intern (format "fsc/%s-minibuffer" name)) '(text)
+        `(interactive "sInput text: ")
+        `(if (> (length text) 0)
+             (progn (insert ,@body)
+                    (message "Done."))
+              (message "Please input some text."))))
 
-(fsc/flip-define-interactively flip (fsc-flip str))
-(fsc/flip-define-interactively flip-back (fsc-flip str t))
-(fsc/flip-define-interactively flip-and-reverse (fsc-flip-and-reverse str))
-(fsc/flip-define-interactively flip-and-reverse-back (fsc-flip-and-reverse str t))
+(fsc/flip-define-minibuffer flip (fsc-flip text))
+(fsc/flip-define-minibuffer flip-back (fsc-flip text t))
+(fsc/flip-define-minibuffer flip-and-reverse (fsc-flip-and-reverse text))
+(fsc/flip-define-minibuffer flip-and-reverse-back (fsc-flip-and-reverse text t))
 
 (defun fsc-flip-and-reverse (string &optional recover-p)
   (fsc-reverse

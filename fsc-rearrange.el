@@ -6,15 +6,13 @@
   (insert (fsc-rearrange
            (delete-and-extract-region begin end))))
 
-(defun fsc/rearrange-interactively ()
-  (interactive)
-  (let* ((string (read-from-minibuffer "Input text: ")))
-    (if (> (length string) 0)
-        (insert (fsc-rearrange string))
-      (message "Please input some text."))
-  ))
+(defun fsc/rearrange-minibuffer (text)
+  (interactive "sInput text: ")
+  (if (> (length text) 0)
+        (insert (fsc-rearrange text))
+      (message "Please input some text.")))
 
-(defun random-intergers-list (range-max)
+(defun fsc-rearrange-random-intergers-list (range-max)
   "input should be an interger, and output a list which elements are out of order.
 Index from 1.
 For example: input is 7, output is like (5 2 6 7 4 3 1)."
@@ -25,18 +23,18 @@ For example: input is 7, output is like (5 2 6 7 4 3 1)."
           (add-to-list 'OUTPUT x))))
     OUTPUT))
 
-(defun random-intergers-list-paranoid (range-max)
-  "Same as `random-intergers-list', but the output list never
+(defun fsc-rearrange-random-intergers-list-paranoid (range-max)
+  "Same as `fsc-rearrange-random-intergers-list', but the output list never
 sorted increasingly."
-  (let ((output (random-intergers-list range-max))
+  (let ((output (fsc-rearrange-random-intergers-list range-max))
         (order (sort output '<)))
     (if (equal output order)
-        (random-intergers-list-paranoid range-max)
+        (fsc-rearrange-random-intergers-list-paranoid range-max)
       output)))
 
-(defun sub-char (string integer)
+(defun fsc-sub-char (string integer)
   "Indexing from 1.
-e.g. (sub-char \"test\" 2) => \"e\""
+e.g. (fsc-sub-char \"test\" 2) => \"e\""
   (make-string 1 (aref string (1- integer))))
 
 (defun fsc-rearrange--split-sentence (input)
@@ -61,23 +59,23 @@ e.g. \"foobar!\" => \"fboaor!\". (If ending contains punctuation, it remains in 
   (let* (input output
          (PUNC (if (string-match "[.,?!\)]$" latin-word) ;if punctuation exist in the end of word
                    (progn (setq input (substring-no-properties latin-word 0 (1- (length latin-word))))
-                          (sub-char latin-word (length latin-word)))
+                          (fsc-sub-char latin-word (length latin-word)))
                  (progn (setq input latin-word)
                         nil)))
          (INPUT_LENGTH (length input))   ;"test" => 4
-         (RAND_LIST (random-intergers-list (length input))) ;"test" => (1 3 4 2)
+         (RAND_LIST (fsc-rearrange-random-intergers-list (length input))) ;"test" => (1 3 4 2)
          )
     (case INPUT_LENGTH
       (1 input)
       (2 input)
-      (3 (concat (sub-char input 1) (sub-char input 3) (sub-char input 2)))
+      (3 (concat (fsc-sub-char input 1) (fsc-sub-char input 3) (fsc-sub-char input 2)))
       (t
        (setq RAND_LIST (remove INPUT_LENGTH RAND_LIST)) ;delete largest num and 1, because we want the string keeping the char order of head & tail.
        (setq RAND_LIST (remove 1 RAND_LIST))
-       (setq output (sub-char input 1)) ;the first char of the input string. "test" => "t"
+       (setq output (fsc-sub-char input 1)) ;the first char of the input string. "test" => "t"
        (dolist (x RAND_LIST)      ;get random interger from RAND_LIST
-         (setq output (concat output (sub-char input x))))
-       (setq output (concat output (sub-char input INPUT_LENGTH)))
+         (setq output (concat output (fsc-sub-char input x))))
+       (setq output (concat output (fsc-sub-char input INPUT_LENGTH)))
        (if (and (>= INPUT_LENGTH 4)     ;Ensure the word in indeed "randomed"
                 (equal input output))
            (fsc-rearrange--latin latin-word)   ;If the same as input, do again.
@@ -101,9 +99,9 @@ e.g. \"他的包袱掉出兩粒橘子\"
     ;; Reverse
     (mapcar (lambda (x)           ; x = "字串"
               (let ((new-string "")
-                    (rnd-list (random-intergers-list (length x))))
+                    (rnd-list (fsc-rearrange-random-intergers-list (length x))))
                 (mapcar (lambda (y) ;y is an interger from rnd-list
-                          (setq new-string (concat new-string (sub-char x y)))) rnd-list)
+                          (setq new-string (concat new-string (fsc-sub-char x y)))) rnd-list)
                 (setq R_LIST (cons new-string R_LIST))
                 ))
             LIST)

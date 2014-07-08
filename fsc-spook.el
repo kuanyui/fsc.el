@@ -66,11 +66,14 @@ NUM (integer) means how many words you want to get."
 
 
 ;; Major mode for editing spook dictionary file
+(defun fsc/spook-edit-open-spook-directory ()
+  (interactive)
+  (dired (concat fsc-spook-directory "spook-dict/")))
 
 (defun fsc/spook-edit-start ()
   (interactive)
   (if (yes-or-no-p "Are you sure to start editing \"a spook file\"? ")
-      (progn (fsc/spook-decode)
+      (progn (fsc-spook-decode-buffer)
              (if (not (eq major-mode 'fsc-spook-edit-mode))
                  (fsc-spook-edit-mode)))
     (message "Canceled.")))
@@ -89,10 +92,8 @@ NUM (integer) means how many words you want to get."
   (if (yes-or-no-p "Save file before kill buffer?")
       (progn (sort-lines nil (point-min) (point-max))
              (fsc/spook-edit-save-buffer)))
-  (kill-buffer (current-buffer)))
-
-(define-derived-mode fsc-spook-edit-mode nil "Spook-File"
-  "Major mode for editing fsc's spook file.")
+  (let (kill-buffer-query-functions) (kill-buffer (current-buffer))))
+;; [FIXME][BUG]? Emacs (24.3.90.1 2014-04-13) still ask user if kill without saving.
 
 (defcustom fsc-spook-edit-mode-hook nil
   "Normal hook run when entering fsc-spook-edit-mode."
@@ -106,8 +107,12 @@ NUM (integer) means how many words you want to get."
     map)
   "Keymap for editing fsc's spook file.")   ;document
 
+(define-derived-mode fsc-spook-edit-mode nil "Spook-File"
+  "Major mode for editing fsc's spook file.")
+
 
 ;; (load-file "~/.emacs.d/under-construction/speech-freedom/fsc-spook.el")
 
 (provide 'fsc-spook)
 ;;; fsc-spook.el ends here
+

@@ -6,7 +6,7 @@
 ;; Author: kuanyui <azazabc123@gmail.com>
 ;; Keywords:
 
-(defun fsc/vertical-interactively (text number)
+(defun fsc/vertical-minibuffer (text number)
   "Rotate the text vertically from minibuffer."
   (interactive "sInput text: \nnHow many characters a line: ")
   (insert (fsc-vertical number text)))
