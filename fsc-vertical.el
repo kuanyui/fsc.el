@@ -6,6 +6,8 @@
 ;; Author: kuanyui <azazabc123@gmail.com>
 ;; Keywords:
 
+(require 'cl)
+
 (defun fsc/vertical-minibuffer (text number)
   "Rotate the text vertically from minibuffer."
   (interactive "sInput text: \nnHow many characters a line: ")
@@ -21,7 +23,7 @@ original text will be replaced."
   "Rotate the text of region to vertical, and copy into kill-ring."
   (interactive "r\nnHow many characters a line: ")
   (kill-new (fsc-vertical number (buffer-substring-no-properties begin end)))
-  (message "String rotated to vertical and copied."))
+  (message "Copied."))
 
 ;; 1. Convert halfwidth to fullwidth
 ;; 2. Split-string by newline ("第一行" "第二行")
@@ -73,6 +75,14 @@ STRING-LIST should be a list like this (NUM = 5):
             (when (string-match (car x) text)
               (setq text (replace-regexp-in-string (car x) (cdr x) text))))
           '((" " . "　")
+            ("#" . "＃")
+            ("\\$" . "＄")
+            ("%" . "％")
+            ("\\^" . "︿")
+            ("&" . "＆")
+            ("\\*" . "＊")
+            ("/" . "／")
+            ("\\\\" . "＼")
             ("0" . "０")
             ("1" . "１")
             ("2" . "２")
@@ -85,9 +95,9 @@ STRING-LIST should be a list like this (NUM = 5):
             ("9" . "９")
             (":" . "：")
             (";" . "；")
-            ("<" . "＜")
+            ("<" . "＾")
             ("=" . "＝")
-            (">" . "＞")
+            (">" . "Ｖ")
             ("?" . "？")
             ("@" . "＠")
             ("A" . "Ａ")
@@ -116,7 +126,8 @@ STRING-LIST should be a list like this (NUM = 5):
             ("X" . "Ｘ")
             ("Y" . "Ｙ")
             ("Z" . "Ｚ")
-            ("_" . "＿")
+            ("_" . "｜")
+            ("-" . "｜")
             ("`" . "｀")
             ("a" . "ａ")
             ("b" . "ｂ")
@@ -145,7 +156,7 @@ STRING-LIST should be a list like this (NUM = 5):
             ("y" . "ｙ")
             ("z" . "ｚ")
             ("{" . "︷")
-            ("|" . "｜")
+            ("|" . "－")
             ("}" . "︸")
             ("(" . "︵")
             (")" . "︶")
@@ -153,6 +164,19 @@ STRING-LIST should be a list like this (NUM = 5):
             ("）" . "︶")
             ("「" . "﹁")
             ("」" . "﹂")
+            ("【" . "︻")
+            ("】" . "︼")
+            ("〔" . "︹")
+            ("〕" . "︺")
+            ("《" . "︽")
+            ("》" . "︾")
+            ("〈" . "︿")
+            ("〉" . "﹀")
+            ("『" . "﹃")
+            ("』" . "﹄")
+            ("［" . "﹇")
+            ("］" . "﹈")
             ))
   text)
 
+(provide 'fsc-vertical)
