@@ -30,14 +30,12 @@ at spook-dict/ (under this package directory), then:
 
 (defun fsc-spook-encode-buffer ()
   "Use this before saving file."
-  (interactive)
   (insert
    (mapconcat (lambda (x) (format "%s" (* 689 x)))
               (string-to-list (delete-and-extract-region (point-min) (point-max)))
               " ")))
 
 (defun fsc-spook-decode-buffer ()
-  (interactive)
   (insert
    (mapconcat (lambda (x) (string (/ (string-to-number x) 689)))
               (split-string-and-unquote (delete-and-extract-region (point-min) (point-max)) " ")
@@ -73,7 +71,8 @@ NUM (integer) means how many words you want to get."
 (defun fsc/spook-edit-start ()
   (interactive)
   (if (yes-or-no-p "Are you sure to start editing \"a spook file\"? ")
-      (progn (fsc-spook-decode-buffer)
+      (progn (set-buffer-file-coding-system 'utf-8-unix)
+             (fsc-spook-decode-buffer)
              (if (not (eq major-mode 'fsc-spook-edit-mode))
                  (fsc-spook-edit-mode)))
     (message "Canceled.")))

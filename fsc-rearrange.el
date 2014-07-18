@@ -1,10 +1,16 @@
-;; Red_d_: 有沒有人以可一寫個音注入輸法，是但打子完句，字可以新重的排列。#地方的民鄉需要化進
 ;;FSC - Fuck the Speeching Censorship
+
+(require 'cl)
 
 (defun fsc/rearrange-region (begin end)
   (interactive "r")
-  (insert (fsc-rearrange
-           (delete-and-extract-region begin end))))
+  (insert (fsc-rearrange (delete-and-extract-region begin end))))
+
+(defun fsc/rearrange-region-and-copy (begin end)
+  "Won't change the original text."
+  (interactive "r")
+  (kill-new (fsc-rearrange (buffer-substring-no-properties begin end)))
+  (message "Copied."))
 
 (defun fsc/rearrange-minibuffer (text)
   (interactive "sInput text: ")
