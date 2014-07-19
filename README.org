@@ -1,0 +1,54 @@
+* fsc - Fuck the Speeching Censorship!
+Do some fabulous treak on text to against fucking speeching censorship.
+[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc.jpg]]
+
+** Features
+*** Rearrange
+Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egnnie, btu slitl huamn rdeaalbe.
+機隨排列子句/ 詞的中彙字文止防來被搜尋引擎到檢索，人但然類仍得讀懂。
+
+*** Vertical
+ｅ ｎ ｌ ｖ ｔ ｔ Ｒ 変 縦 直 就
+。 ｇ 　 ｅ ｏ ｅ ｏ 換 書 書 是
+　 　 ｗ ｒ 　 ｘ ｔ す に 。 把
+　 ｓ ｒ ｔ Ｃ ｔ ａ る 文 　 字
+　 ｔ ｉ ｉ Ｊ 　 ｔ 。 字 　 串
+　 ｙ ｔ ｃ Ｋ ｉ ｅ 　 列 　 轉
+　 ｌ ｉ ａ 　 ｎ 　 　 を 　 成
+
+*** Flip & Reverse
+1. .tfel-ot-thgir otni txet eht esreveR
+2. Ⅎlᴉd ʇɥǝ ʇǝxʇ ndsᴉpǝ-poʍu˙
+3. ˙ʇɟǝl-oʇ-ʇɥƃᴉɹ oʇuᴉ ǝsɹǝʌǝɹ puɐ uʍop-ǝpᴉsdn ʇxǝʇ ǝɥʇ dᴉlℲ
+
+*** Spook
+Insert some wonderful words as nice presents for dear censors.
+
+#+BEGIN_QUOTE
+Basically, this just like Emacs build-in package =spook=, but with localization for East-Asia contries:
+- wheelparty
+- greatwall
+#+END_QUOTE
+
+** Screenshot
+Interactive action menus
+[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc1.png]]
+[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc2.png]]
+[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc3.png]]
+[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc4.png]]
+
+** Get
+*** Dependancies
+- =makey.el= (If you're using Magit, =makey.el= has been already installed.)
+
+*** Installation
+Download or clone repository to your computer, then add these:
+#+BEGIN_SRC lisp
+(add-to-list 'load-path "/PATH/TO/fsc/")
+(require 'makey)
+(require 'fsc)
+(global-set-key (kbd "C-c f") 'fsc)
+#+END_SRC
+
+** License
+WTFPL 1.0
