@@ -22,16 +22,25 @@
   "input should be an interger, and output a list which elements are out of order.
 Index from 1.
 For example: input is 7, output is like (5 2 6 7 4 3 1)."
-  (loop with fin = nil
-        for x = (random range-max)
-        for len = (length fin)
-        when (and (> x 0)
-                  (< len range-max)
-                  (not (= x (1+ len))))
-                  do (cl-pushnew x fin)
-        finally return fin))
+  (let (fin)
+    (while (< (length fin) range-max)
+      (let* ((n (loop for x = (random (1+ range-max)) when (> x 0) return x)))
+        (pushnew n fin)))
+    fin))
 
-(loop repeat 50 collect (fsc-rearrange-random-intergers-list 2))
+;; (fsc-rearrange-random-intergers-list 3)
+
+;; (defun fsc-rearrange-random-intergers-list (range-max)
+;;   (loop with fin = nil
+;;         for x = (random (1+ range-max))
+;;         for len = (length fin)
+;;         when (and (> x 0)
+;;                   (< len range-max)
+;;                   (not (= x (1+ len))))
+;;         do (cl-pushnew x fin)
+;;         finally return fin))
+
+;; (loop repeat 50 collect (fsc-rearrange-random-intergers-list 2))
 
 
 (defun fsc-rearrange-random-intergers-list-paranoid (range-max)
@@ -48,7 +57,7 @@ sorted increasingly."
 e.g. (fsc-sub-char \"test\" 2) => \"e\""
   (make-string 1 (aref string (1- integer))))
 
-(defvar fsc-punc-pat "\\([~!@#\\$%\\^&\\*()_\\+\\.,<>/\\?]\\)")
+(setq fsc-punc-pat "\\([~!@#\\$%\\^&\\*()_\\+\\.,'\"<>/\\?;:]\\)")
 
 (defun fsc-rearrange--split-sentence (input)
   "Input can be a multiple lines strings.
@@ -57,8 +66,8 @@ e.g. \"The first line \nThe second line\"
 => ((\"The\" \"first\" \"line\") (\"The\" \"second\" \"line\"))"
   (setq input (replace-regexp-in-string "\\(\\cc\\)\\(\\cl\\)" "\\1 \\2" input))
   (setq input (replace-regexp-in-string "\\(\\cl\\)\\(\\cc\\)" "\\1 \\2" input))
-  (setq input (replace-regexp-in-string (concat "\\(\\cc\\)" fsc-punc-pat) " \\1 \\2  " input))
-  (setq input (replace-regexp-in-string (concat "\\(\\cl\\)" fsc-punc-pat) " \\1 \\2  " input))
+  (setq input (replace-regexp-in-string (concat "\\(\\cc\\)" fsc-punc-pat) "\\1 \\2  " input))
+  (setq input (replace-regexp-in-string (concat "\\(\\cl\\)" fsc-punc-pat) "\\1 \\2  " input))
   (setq input (replace-regexp-in-string (concat fsc-punc-pat "\\(\\cc\\)") " \\1 \\2  " input))
   (setq input (replace-regexp-in-string (concat fsc-punc-pat "\\(\\cl\\)") " \\1 \\2  " input))
   (setq input (replace-regexp-in-string "\\([。，！？；：「」『』（）、【】《》〈〉]\\)" " \\1 " input))
@@ -69,7 +78,8 @@ e.g. \"The first line \nThe second line\"
     output
     ))
 
-;; [FIXME] ...orz如果latin-word是"(parenthesis)"這樣的字串勒...需要用到 (("符號" . 位置) ...)這麼機車的方法處理嗎...
+;; (fsc-rearrange--split-sentence "Rearrange characters in vocabulary, but still human readable.中文")
+
 (defun fsc-rearrange--latin (latin-word)
   "input should be a single word and output whose characters are randomly ordered one (not include punctuation).
 e.g. \"foobar\" => \"fboaor\"."
@@ -91,8 +101,7 @@ e.g. \"foobar\" => \"fboaor\"."
              (if (equal fin latin-word)
                  (fsc-rearrange--latin latin-word)
                fin)))))
-          
-(loop repeat 50 collect (fsc-rearrange--latin "Test"))
+;; (loop repeat 10000 collect (fsc-rearrange--latin "Test"))
 
 
 (defun fsc-rearrange--chinese (input)
@@ -133,7 +142,9 @@ This function will decide the input should use `fsc-rearrange--latin' or
 `fsc-rearrange--chinese' to disarrange word, then return the result."
   ;; ("中文和" "1234567890" "and" "English" "words" "同時摻雜" "in" "a" "sentence")
   ;; [FIXME] 記得不要動到數字的順序。
-  (cond ((string-match "\\cc" input)
+  (cond ((string-match "[0-9]" input)
+         input)
+        ((string-match "\\cc" input)
          (fsc-rearrange--chinese input))
         ((string-match "\\cl" input)
          (concat (fsc-rearrange--latin input) " "))
@@ -149,9 +160,8 @@ This function will decide the input should use `fsc-rearrange--latin' or
                  "\n") ; (("The" "sentence" ".")("Apple"))
     )
 
-'("This" "is" "..." "一個簡單測試" "。")
-(fsc-rearrange "WTFPL（Do What The Fuck You Want To Public License，中文譯名：你他媽的想幹嘛就幹嘛公眾授權條款）
-是一種不太常用的、極度放任的自由軟體授權條款...。")
+
+;; (fsc-rearrange "WTFPL（Do What The Fuck You Want To Public License，中文譯名：你他媽的想幹嘛就幹嘛公眾授權條款）\n是一種不太常用的、極度放任的自由軟體授權條款...。")
 
 
 
