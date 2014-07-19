@@ -8,6 +8,7 @@ Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egn
 機隨排列子句/ 詞的中彙字文止防來被搜尋引擎到檢索，人但然類仍得讀懂。
 
 *** Vertical
+#+BEGIN_EXAMPLE
 ｅ ｎ ｌ ｖ ｔ ｔ Ｒ 変 縦 直 就
 。 ｇ 　 ｅ ｏ ｅ ｏ 換 書 書 是
 　 　 ｗ ｒ 　 ｘ ｔ す に 。 把
@@ -15,6 +16,7 @@ Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egn
 　 ｔ ｉ ｉ Ｊ 　 ｔ 。 字 　 串
 　 ｙ ｔ ｃ Ｋ ｉ ｅ 　 列 　 轉
 　 ｌ ｉ ａ 　 ｎ 　 　 を 　 成
+#+END_EXAMPLE
 
 *** Flip & Reverse
 1. .tfel-ot-thgir otni txet eht esreveR
