@@ -1,10 +1,11 @@
 * fsc - Fuck the Speeching Censorship!
-Do some fabulous treak on text to against fucking speeching censorship.
+Do some fabulous trick on text to against fucking speeching censorship.
 [[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc.jpg]]
 
 ** Features
 *** Rearrange
 Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egnnie, btu slitl huamn rdeaalbe.
+
 機隨排列子句/ 詞的中彙字文止防來被搜尋引擎到檢索，人但然類仍得讀懂。
 
 *** Vertical
@@ -22,6 +23,18 @@ Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egn
 1. .tfel-ot-thgir otni txet eht esreveR
 2. Ⅎlᴉd ʇɥǝ ʇǝxʇ ndsᴉpǝ-poʍu˙
 3. ˙ʇɟǝl-oʇ-ʇɥƃᴉɹ oʇuᴉ ǝsɹǝʌǝɹ puɐ uʍop-ǝpᴉsdn ʇxǝʇ ǝɥʇ dᴉlℲ
+4. Reverse (and flip) all back.
+
+*** Garbage
+I`n]s_e@r{t+ !g#a~r^b*a)g~e{s~ #b_e&t?w+e*e#n$ ~c?h!a%r`a"c>t}e>r]s^.}
+/在$字#元>間/插?入$一&堆]垃%圾{。#
+)文{字'間<の$ゴ}ミ?を"挿'入?す?る&。&
+
+I/n/s/e/r/t/ /g/a/r/b/a/g/e/s/ /b/e/t/w/e/e/n/ /c/h/a/r/a/c/t/e/r/s/ /(/A/P/H/ /s/t/y/l/e/)/./
+/在/字/元/間/插/入/一/堆/垃/圾/（/A/P/H/ /風/）/。/
+/文/字/間/の/ゴ/ミ/を/挿/入/す/る/（/ヘ/タ/リ/ア/ス/タ/イ/ル/）/。/
+
+I<span style='color:#fff;'>_</span>n<span style='color:#fff;'>%</span>s<span style='color:#fff;'>+</span>e<span style='color:#fff;'>]</span>r<span style='color:#fff;'>?</span>t<span style='color:#fff;'>$</span> <span style='color:#fff;'>"</span>g<span style='color:#fff;'>&gt;</span>a<span style='color:#fff;'>)</span>r<span style='color:#fff;'>&</span>b<span style='color:#fff;'>^</span>a<span style='color:#fff;'>%</span>g<span style='color:#fff;'>?</span>e<span style='color:#fff;'>&gt;</span>s<span style='color:#fff;'>!</span> <span style='color:#fff;'>&lt;</span>b<span style='color:#fff;'>$</span>e<span style='color:#fff;'>"</span>t<span style='color:#fff;'>_</span>w<span style='color:#fff;'>*</span>e<span style='color:#fff;'>(</span>e<span style='color:#fff;'>~</span>n<span style='color:#fff;'>`</span> <span style='color:#fff;'>[</span>c<span style='color:#fff;'>+</span>h<span style='color:#fff;'>[</span>a<span style='color:#fff;'>+</span>r<span style='color:#fff;'>?</span>a<span style='color:#fff;'>*</span>c<span style='color:#fff;'>&</span>t<span style='color:#fff;'>)</span>e<span style='color:#fff;'>*</span>r<span style='color:#fff;'>$</span>s<span style='color:#fff;'>!</span> <span style='color:#fff;'>%</span>(<span style='color:#fff;'>&lt;</span>H<span style='color:#fff;'>~</span>T<span style='color:#fff;'>(</span>M<span style='color:#fff;'>[</span>L<span style='color:#fff;'>]</span> <span style='color:#fff;'>&</span>+<span style='color:#fff;'>"</span> <span style='color:#fff;'>`</span>C<span style='color:#fff;'>`</span>S<span style='color:#fff;'>!</span>S<span style='color:#fff;'>*</span> <span style='color:#fff;'>`</span>h<span style='color:#fff;'>(</span>i<span style='color:#fff;'>(</span>d<span style='color:#fff;'>}</span>d<span style='color:#fff;'>$</span>e<span style='color:#fff;'>&gt;</span>n<span style='color:#fff;'>^</span>)<span style='color:#fff;'>|</span>.<span style='color:#fff;'>"</span><br>在<span style='color:#fff;'>#</span>字<span style='color:#fff;'>[</span>元<span style='color:#fff;'>|</span>間<span style='color:#fff;'>^</span>插<span style='color:#fff;'>&</span>入<span style='color:#fff;'>"</span>一<span style='color:#fff;'>{</span>堆<span style='color:#fff;'>+</span>垃<span style='color:#fff;'>"</span>圾<span style='color:#fff;'>&lt;</span>(<span style='color:#fff;'>(</span>H<span style='color:#fff;'>$</span>T<span style='color:#fff;'>(</span>M<span style='color:#fff;'>(</span>L<span style='color:#fff;'>+</span> <span style='color:#fff;'>}</span>+<span style='color:#fff;'>&lt;</span> <span style='color:#fff;'>{</span>C<span style='color:#fff;'>`</span>S<span style='color:#fff;'>'</span>S<span style='color:#fff;'>@</span> <span style='color:#fff;'>}</span>h<span style='color:#fff;'>#</span>i<span style='color:#fff;'>*</span>d<span style='color:#fff;'>{</span>d<span style='color:#fff;'>&lt;</span>e<span style='color:#fff;'>$</span>n<span style='color:#fff;'>]</span>)<span style='color:#fff;'>[</span>。<span style='color:#fff;'>]</span><br>文<span style='color:#fff;'>'</span>字<span style='color:#fff;'>_</span>間<span style='color:#fff;'>#</span>の<span style='color:#fff;'>~</span>ゴ<span style='color:#fff;'>&</span>ミ<span style='color:#fff;'>$</span>を<span style='color:#fff;'>&lt;</span>挿<span style='color:#fff;'>&gt;</span>入<span style='color:#fff;'>^</span>す<span style='color:#fff;'>{</span>る<span style='color:#fff;'>|</span>(<span style='color:#fff;'>{</span>H<span style='color:#fff;'>`</span>T<span style='color:#fff;'>+</span>M<span style='color:#fff;'>|</span>L<span style='color:#fff;'>`</span> <span style='color:#fff;'>!</span>+<span style='color:#fff;'>"</span> <span style='color:#fff;'>_</span>C<span style='color:#fff;'>+</span>S<span style='color:#fff;'>&</span>S<span style='color:#fff;'>[</span> <span style='color:#fff;'>]</span>h<span style='color:#fff;'>]</span>i<span style='color:#fff;'>)</span>d<span style='color:#fff;'>|</span>d<span style='color:#fff;'>]</span>e<span style='color:#fff;'>{</span>n<span style='color:#fff;'>&</span>)<span style='color:#fff;'>&</span>。
 
 *** Spook
 Insert some wonderful words as nice presents for dear censors.
@@ -41,7 +54,7 @@ Interactive action menus
 
 ** Get
 *** Dependancies
-- =makey.el= (If you're using Magit, =makey.el= has been already installed.)
+- =makey.el= (If you're using Magit, =makey.el= should have been already installed.)
 
 *** Installation
 Download or clone repository to your computer, then add these:
@@ -54,3 +67,5 @@ Download or clone repository to your computer, then add these:
 
 ** License
 WTFPL 1.0
+** Known Issue
+rearrange: 平仮名/カタカナを分割する。
