@@ -26,13 +26,17 @@ Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egn
 4. Reverse (and flip) all back.
 
 *** Garbage
-I`n]s_e@r{t+ !g#a~r^b*a)g~e{s~ #b_e&t?w+e*e#n$ ~c?h!a%r`a"c>t}e>r]s^.}
-/在$字#元>間/插?入$一&堆]垃%圾{。#
-)文{字'間<の$ゴ}ミ?を"挿'入?す?る&。&
+#+BEGIN_EXAMPLE
+I*n)s~e^r(t( @g!a/r[b|a<g?e~s# _b"e<t<w}e?e(n| )c)h<a]r|a*c't^e+r(s@./
+)在&字@元{間$插^入$一`堆$垃]圾#。*
+'文|字&間+の`ゴ@ミ*を)挿+入@す`る}。
+#+END_EXAMPLE
 
+#+BEGIN_EXAMPLE
 I/n/s/e/r/t/ /g/a/r/b/a/g/e/s/ /b/e/t/w/e/e/n/ /c/h/a/r/a/c/t/e/r/s/ /(/A/P/H/ /s/t/y/l/e/)/./
 /在/字/元/間/插/入/一/堆/垃/圾/（/A/P/H/ /風/）/。/
 /文/字/間/の/ゴ/ミ/を/挿/入/す/る/（/ヘ/タ/リ/ア/ス/タ/イ/ル/）/。/
+#+END_EXAMPLE
 
 #+BEGIN_SRC html
 I<span style='color:#fff;'>_</span>n<span style='color:#fff;'>$</span>... <br>
