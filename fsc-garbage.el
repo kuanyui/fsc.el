@@ -4,6 +4,7 @@
 
 (require 'cl)
 (setq fsc-garbage-chars "`~!@#$%^&*()_+[]{}'\"|/?<>")
+(setq fsc-garbage-chars-html "`~!@#$%^&*()_+[]{}'\|/?<>")
 
 (defun fsc-garbage (text)
   (substring-no-properties
@@ -27,7 +28,7 @@
           (concat (string x)
                   (concat
                    "<span style='color:#fff;'>"
-                   (let ((c (string (aref fsc-garbage-chars (random (length fsc-garbage-chars))))))
+                   (let ((c (string (aref fsc-garbage-chars-html (random (length fsc-garbage-chars-html))))))
                      (cond ((equal c "<") "&lt;")
                            ((equal c ">") "&gt;")
                            (t c)))
