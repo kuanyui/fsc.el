@@ -36,16 +36,24 @@
       ("Flip/Reverse"
        ("l" "Reverse (Right-to-Left)" fsc/reverse-region)
        ("f" "Flip (Upside-down)" fsc/flip-region)
-       ("F" "Flip and Reverse" fsc/flip-and-reverse-region))
+       ("z" "Flip and Reverse" fsc/flip-and-reverse-region))
       ("Flip/Reverse (Translate Back)"
        ("bf" "Flip" fsc/flip-back-region)
-       ("bF" "Flip and Reverse" fsc/flip-and-reverse-back-region))
-      ("Vertical Line"
-       ("v" "Rotate vertically" fsc/vertical-region)
-       ("V" "Rotate vertically and copy" fsc/vertical-region-and-copy))
+       ("bz" "Flip and Reverse" fsc/flip-and-reverse-back-region))
+      ("Garbage"
+       ("g" "Insert garbages between each character" fsc/garbage-region)
+       ("a" "Insert garbages in APH style" fsc/garbage-aph-region)
+       ("h" "Insert garbages with HTML" fsc/garbage-html-region)
+       ("cg" "Insert garbages between each character and copy" fsc/garbage-region-copy)
+       ("ca" "Insert garbages in APH style and copy" fsc/garbage-aph-region-copy)
+       ("ch" "Insert garbages with HTML and copy" fsc/garbage-html-region-copy)
+       ("dg" "Delete garbages in region" fsc/garbage-remove-region))
       ("Rearrange Characters"
        ("r" "Rearrange characters of words" fsc/rearrange-region)
-       ("R" "Rearrange characters and copy" fsc/rearrange-region-and-copy))))
+       ("cr" "Rearrange characters and copy" fsc/rearrange-region-and-copy))
+      ("Vertical Line"
+       ("v" "Rotate vertically" fsc/vertical-region)
+       ("cv" "Rotate vertically and copy" fsc/vertical-region-and-copy))))
     (fsc-minibuffer
      (description "Read text from minibuffer")
      (actions
@@ -56,10 +64,16 @@
       ("Flip/Reverse (Back) "
        ("bf" "Flip" fsc/flip-back-minibuffer)
        ("bF" "Flip and Reverse" fsc/flip-and-reverse-back-minibuffer))
-      ("Vertical Line"
-       ("v" "Rotate vertically" fsc/vertical-minibuffer))
+      ("Garbage"
+       ("g" "Insert garbages between each character" fsc/garbage-minibuffer)
+       ("a" "Insert garbages in APH style" fsc/garbage-aph-minibuffer)
+       ("h" "Insert garbages with HTML" fsc/garbage-html-minibuffer)
+       ("dg" "Delete garbages" fsc/garbage-remove-minibuffer)
+       )
       ("Rearrange Characters"
-       ("r" "Rearrange characters of words" fsc/rearrange-minibuffer))))
+       ("r" "Rearrange characters of words" fsc/rearrange-minibuffer))
+      ("Vertical Line"
+       ("v" "Rotate vertically" fsc/vertical-minibuffer))))
     (fsc-spook
      (description "Insert Wonderful Words for Censors")
      (lisp-switches
