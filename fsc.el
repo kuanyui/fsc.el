@@ -19,7 +19,7 @@
 (require 'fsc-spook)
 (require 'fsc-vertical)
 (require 'fsc-flip-and-reverse)
-
+(require 'fsc-garbage)
 
 (setq fsc-context-menus
   '(
