@@ -63,7 +63,7 @@ Interactive action menus
 
 ** Get
 *** Dependancies
-- =makey.el= (If you're using Magit, =makey.el= should have been already installed.)
+- =makey.el=
 
 *** Installation
 Download or clone repository to your computer, then add these:
