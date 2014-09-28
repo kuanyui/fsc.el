@@ -8,6 +8,8 @@ Rgaarrene ctharecars ni vbcuoalray rlanodmy ot aovid bineg indxeed yb secrah egn
 
 機隨排列子句/ 詞的中彙字文止防來被搜尋引擎到檢索，人但然類仍得讀懂。
 
+ラダンムで文を組せ直みば、サーエンジチンにデンイッスクさことれる防がるげ。でそれも間人がめ読る。
+
 *** Vertical
 #+BEGIN_EXAMPLE
 ｅ ｎ ｌ ｖ ｔ ｔ Ｒ 変 縦 直 就
@@ -76,5 +78,3 @@ Download or clone repository to your computer, then add these:
 
 ** License
 WTFPL 1.0
-** Known Issue
-rearrange: 平仮名/カタカナを分割する。

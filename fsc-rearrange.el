@@ -64,7 +64,9 @@ e.g. (fsc-sub-char \"test\" 2) => \"e\""
 This function split the input (by space) into a nested list (by newline).
 e.g. \"The first line \nThe second line\"
 => ((\"The\" \"first\" \"line\") (\"The\" \"second\" \"line\"))"
-  (setq input (replace-regexp-in-string "\\(\\cc\\)\\(\\cl\\)" "\\1 \\2" input))
+  (setq input (replace-regexp-in-string "\\(\\cK\\)\\(\\cH\\)" "\\1 \\2" input))
+  (setq input (replace-regexp-in-string "\\(\\cH\\)\\(\\cK\\)" "\\1 \\2" input))
+  (setq input (replace-regexp-in-string "\\(\\cc\\)\\(\\cl\\)" "\\1 \\2" input)) ;In ELisp, \cc includes Kanji, Hiragana and Katakana
   (setq input (replace-regexp-in-string "\\(\\cl\\)\\(\\cc\\)" "\\1 \\2" input))
   (setq input (replace-regexp-in-string (concat "\\(\\cc\\)" fsc-punc-pat) "\\1 \\2  " input))
   (setq input (replace-regexp-in-string (concat "\\(\\cl\\)" fsc-punc-pat) "\\1 \\2  " input))
@@ -141,26 +143,27 @@ Take a look of `fsc-rearrange-weighting-list'"
 This function will decide the input should use `fsc-rearrange--latin' or
 `fsc-rearrange--chinese' to disarrange word, then return the result."
   ;; ("中文和" "1234567890" "and" "English" "words" "同時摻雜" "in" "a" "sentence")
-  ;; [FIXME] 記得不要動到數字的順序。
   (cond ((string-match "[0-9]" input)
          input)
-        ((string-match "\\cc" input)
+        ((string-match "\\cc" input);In ELisp, it includes Kanji, Hiragana and Katakana.
          (fsc-rearrange--chinese input))
         ((string-match "\\cl" input)
          (concat (fsc-rearrange--latin input) " "))
+	((equal input "ー")   ;Because \\cc not includes this symbol in Katakana
+	 input)
         (t
          (concat input " "))))
 
 (defun fsc-rearrange (input)
   "Main function to handle sentences (include newlines, CJK/Latin)."
-    (mapconcat (lambda (x)                 ;原始list
+    (mapconcat (lambda (x)                 ;Original list
                  (mapconcat (lambda (y)     ; ("The" "sentence" ".")
                               (fsc-rearrange-process-input-single y)) x ""))
                  (fsc-rearrange--split-sentence input)
                  "\n") ; (("The" "sentence" ".")("Apple"))
     )
 
-
+(fsc-rearrange "ランダムで文を組み直せば、サーチエンジンにインデックスされることが防げる。それでも人間が読める。")
 ;; (fsc-rearrange "WTFPL（Do What The Fuck You Want To Public License，中文譯名：你他媽的想幹嘛就幹嘛公眾授權條款）\n是一種不太常用的、極度放任的自由軟體授權條款...。")
 
 
