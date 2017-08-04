@@ -77,20 +77,25 @@ NUM (integer) means how many words you want to get."
                  (fsc-spook-edit-mode)))
     (message "Canceled.")))
 
-(defun fsc/spook-edit-save-buffer ()
+(defun fsc/spook-edit-save-buffer (&optional save-for-kill-buffer)
   (interactive)
   (if (eq major-mode 'fsc-spook-edit-mode)
-      (progn (fsc-spook-encode-buffer)
-             (save-buffer)
-             (fsc-spook-decode-buffer)
-             (message (format "Wrote %s" (buffer-file-name))))
+      (progn
+        (delete-duplicate-lines (point-min) (point-max))
+        (sort-lines nil (point-min) (point-max))
+        (let ((whitespace-style '(empty trailing)))
+          (whitespace-cleanup))
+        (fsc-spook-encode-buffer)
+        (save-buffer)
+        (if (null save-for-kill-buffer)
+            (fsc-spook-decode-buffer))
+        (message (format "Wrote %s" (buffer-file-name))))
     (message "This is not a spook dictionary file. and you must to use M-x fsc/spook-edit-start first.")))
 
 (defun fsc/spook-edit-kill-buffer ()
   (interactive)
-  (if (yes-or-no-p "Save file before kill buffer?")
-      (progn (sort-lines nil (point-min) (point-max))
-             (fsc/spook-edit-save-buffer)))
+  (if (yes-or-no-p "[fsc.el] If you want to save this spook file then close it? ")
+      (fsc/spook-edit-save-buffer 'save-for-kill-buffger))
   (let (kill-buffer-query-functions) (kill-buffer (current-buffer))))
 ;; [FIXME][BUG]? Emacs (24.3.90.1 2014-04-13) still ask user if kill without saving.
 
@@ -114,4 +119,3 @@ NUM (integer) means how many words you want to get."
 
 (provide 'fsc-spook)
 ;;; fsc-spook.el ends here
-
