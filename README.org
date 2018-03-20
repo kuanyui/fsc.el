@@ -1,6 +1,6 @@
 * fsc - Fuck the Speeching Censorship!
 Do some fabulous tricks on text to against fucking speeching censorship from fucking governments. Freedom!
-[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc.jpg]]
+[[https://kuanyui.github.io/image/repo/fsc/fsc.jpg]]
 
 ** Features
 *** Rearrange
@@ -58,10 +58,10 @@ Basically, this just like Emacs build-in package =spook=, but with localization 
 
 ** Screenshot
 Interactive action menus
-[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc1.png]]
-[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc2.png]]
-[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc3.png]]
-[[https://dl.dropboxusercontent.com/u/1776218/fsc/fsc4.png]]
+[[https://kuanyui.github.io/image/repo/fsc/fsc1.png]]
+[[https://kuanyui.github.io/image/repo/fsc/fsc2.png]]
+[[https://kuanyui.github.io/image/repo/fsc/fsc3.png]]
+[[https://kuanyui.github.io/image/repo/fsc/fsc4.png]]
 
 ** Get
 *** Dependancies
