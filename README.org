@@ -58,6 +58,7 @@ Basically, this just like Emacs build-in package =spook=, but with localization 
 
 ** Screenshot
 Interactive action menus
+
 [[https://kuanyui.github.io/image/repo/fsc/fsc1.png]]
 [[https://kuanyui.github.io/image/repo/fsc/fsc2.png]]
 [[https://kuanyui.github.io/image/repo/fsc/fsc3.png]]
